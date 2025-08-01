@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Kalorienrechner</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom right, #e0f7fa, #fff);
+      color: #333;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1rem;
+      color: #555;
+    }
+    .intro-section {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .intro-section h2 {
+      margin-top: 0;
+      color: #00796b;
+    }
+    .intro-section p {
+      color: #666;
+    }
+    form {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    input, select, button {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #00796b;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+    #result {
+      margin-top: 20px;
+      background: #e0f2f1;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    }
+    .affiliate-links a {
+      display: block;
+      margin: 10px 0;
+      color: #00695c;
+      text-decoration: none;
+    }
+    .affiliate-links a:hover {
+      text-decoration: underline;
+    }
+    #popup {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      padding: 20px 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+      z-index: 999;
+      max-width: 90%;
+      text-align: center;
+      animation: fadeInUp 0.5s ease-out;
+    }
+    #popup a {
+      background: #ff7043;
+      color: white;
+      padding: 12px 18px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    #popup a:hover {
+      background: #f4511e;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translate(-50%, 40px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Finde deinen idealen Kalorienbedarf</h1>
+    <p>In nur wenigen Klicks deinen Grundumsatz & Energiebedarf berechnen – perfekt zum Abnehmen oder Muskelaufbau!</p>
+  </header>  <div class="intro-section">
+    <h2>Warum dein Kalorienbedarf wichtig ist</h2>
+    <p>Dein Kalorienverbrauch bestimmt, wie du dein Gewicht verändern kannst – gezielt abnehmen, Muskeln aufbauen oder einfach gesund bleiben. Mit unserem smarten Rechner findest du es in Sekunden heraus.</p><form id="tdeeForm">
+  <input type="number" id="age" placeholder="Alter" required>
+  <select id="gender">
+    <option value="male">Männlich</option>
+    <option value="female">Weiblich</option>
+  </select>
+  <input type="number" id="height" placeholder="Größe in cm" required>
+  <input type="number" id="weight" placeholder="Gewicht in kg" required>
+  <select id="activity">
+    <option value="1.2">Kaum aktiv</option>
+    <option value="1.375">Leicht aktiv</option>
+    <option value="1.55">Mäßig aktiv</option>
+    <option value="1.725">Sehr aktiv</option>
+    <option value="1.9">Extrem aktiv</option>
+  </select>
+  <button type="submit">Jetzt berechnen</button>
+</form>
+
+<div id="result"></div>
+
+  </div>  <div id="popup">
+    🎯 Hol dir jetzt deinen persönlichen Abnehmplan<br>
+    <a href="https://www.digistore24.com/redir/57899/gadgetguru187/" target="_blank">Jetzt starten</a>
+  </div>  <script>
+    const form = document.getElementById('tdeeForm');
+    const result = document.getElementById('result');
+    let popupTimer;
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearTimeout(popupTimer);
+
+      const age = +document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const height = +document.getElementById('height').value;
+      const weight = +document.getElementById('weight').value;
+      const activity = +document.getElementById('activity').value;
+
+      const bmr = gender === 'male'
+        ? 10 * weight + 6.25 * height - 5 * age + 5
+        : 10 * weight + 6.25 * height - 5 * age - 161;
+
+      const tdee = bmr * activity;
+
+      result.innerHTML = `
+        <div><strong>Grundumsatz (BMR):</strong> ${bmr.toFixed(0)} kcal/Tag</div>
+        <div><strong>Kalorienbedarf (TDEE):</strong> ${tdee.toFixed(0)} kcal/Tag</div>
+        <div class="affiliate-links">
+          <a href="https://em-horizons.com/smart-fitness-mit-ki-zur-ideal-figur/#aff=gadgetguru187" target="_blank">🤖 Fitness mit KI – EM Horizons</a>
+          <a href="https://simpelabnehmen.de/einmaliges-angebot-2/#aff=gadgetguru187" target="_blank">🍽️ Simpel Abnehmen – Diätplan</a>
+          <a href="https://www.checkout-ds24.com/redir/609733/gadgetguru187/" target="_blank">💪 Muskelaufbau-Rezepte</a>
+          <a href="https://www.leichter-abnehmen.ch/home#aff=gadgetguru187" target="_blank">🇨🇭 Leichter Abnehmen Schweiz</a>
+          <a href="https://www.checkout-ds24.com/redir/585963/gadgetguru187/" target="_blank">💊 Stoffwechsel-Booster</a>
+        </div>
+      `;
+
+      popupTimer = setTimeout(() => {
+        document.getElementById('popup').style.display = 'block';
+      }, 5000);
+    });
+  </script></body>
+</html>
